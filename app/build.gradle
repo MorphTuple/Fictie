@@ -10,6 +10,10 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdk 32
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "io.morphtuple.fictie"
         minSdk 21

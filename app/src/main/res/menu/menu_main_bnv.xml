@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_library"
         android:icon="@drawable/baseline_bookmarks_black_24dp"
         android:title="@string/menu_library" />
     <item
+        android:id="@+id/menu_search"
         android:icon="@drawable/baseline_search_black_24dp"
         android:title="@string/menu_search" />
     <item
+        android:id="@+id/menu_settings"
         android:icon="@drawable/baseline_settings_black_24dp"
         android:title="@string/menu_settings" />
 </menu>
