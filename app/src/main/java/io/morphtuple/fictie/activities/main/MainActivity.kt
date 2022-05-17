@@ -8,7 +8,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.R
 import io.morphtuple.fictie.common.ui.ViewPagerBottomNavigationViewBinder
 import io.morphtuple.fictie.databinding.ActivityMainBinding
+import io.morphtuple.fictie.fragments.LibraryFragment
 import io.morphtuple.fictie.fragments.SearchFragment
+import io.morphtuple.fictie.fragments.SettingsFragment
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
@@ -20,12 +22,20 @@ class MainActivity : FragmentActivity() {
         setContentView(binding.root)
 
         binding.mainPager.adapter = ScreenSlidePagerAdapter(this)
-        ViewPagerBottomNavigationViewBinder.bind(binding.mainPager, binding.mainBnv, listOf(R.id.menu_library, R.id.menu_search, R.id.menu_settings))
+        ViewPagerBottomNavigationViewBinder.bind(
+            binding.mainPager,
+            binding.mainBnv,
+            listOf(R.id.menu_library, R.id.menu_search, R.id.menu_settings)
+        )
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = 3
 
-        override fun createFragment(position: Int): Fragment = SearchFragment()
+        override fun createFragment(position: Int): Fragment = when (position) {
+            0 -> LibraryFragment()
+            1 -> SearchFragment()
+            else -> SettingsFragment()
+        }
     }
 }
