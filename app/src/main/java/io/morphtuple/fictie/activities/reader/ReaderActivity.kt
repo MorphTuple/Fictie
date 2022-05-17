@@ -12,6 +12,8 @@ import io.morphtuple.fictie.databinding.ActivityReaderBinding
 class ReaderActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_FIC_ID = "fic_id"
+        const val HTML_TEMPLATE =
+            "<html><head><style>.userstuff p{margin:1.286em auto;padding:0;line-height:1.5;font-size:.875em}body{background:#000;color:#fff;margin:1em 2em;font-family:'Lucida Grande','Lucida Sans Unicode','GNU Unifont',Verdana,Helvetica,sans-serif}.userstuff{word-wrap:break-word}</style></head><body><div class=\"userstuff\">$1</div></body></html>"
     }
 
     private val viewModel by viewModels<ReaderViewModel>()
@@ -25,18 +27,13 @@ class ReaderActivity : AppCompatActivity() {
         binding.readerWebView.setBackgroundColor(Color.TRANSPARENT)
 
         setContentView(binding.root)
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         viewModel.getFic(intent.getStringExtra(EXTRA_FIC_ID)!!)
 
         viewModel.fic.observe(this) {
             if (it == null) return@observe
 
-            val html =
-                "<html> <head> <style>.userstuff p { margin: 1.286em auto; padding: 0; line-height: 1.5; font-size: 0.875em; } body { background: black; color: white; margin : 1em 2em; font-family: 'Lucida Grande','Lucida Sans Unicode','GNU Unifont',Verdana,Helvetica,sans-serif; }\n .userstuff {word-wrap: break-word;}</style> </head>  <body> <div class=\"userstuff\">${it.userStuff}</div> </body> </html>"
+            val html = HTML_TEMPLATE.replace("$1", it.userStuff)
 
             val encodedHtml = Base64.encodeToString(html.toByteArray(), Base64.NO_PADDING)
 
