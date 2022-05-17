@@ -1,6 +1,7 @@
 package io.morphtuple.fictie.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.*
 import dagger.hilt.android.AndroidEntryPoint
+import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.databinding.FragmentSearchBinding
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
 import io.morphtuple.fictie.models.PartialFic
@@ -38,7 +40,14 @@ class SearchFragment() : Fragment() {
             binding.advancedOptionsLayout.toggle()
         }
 
-        val searchResultAdapter = FicSearchResultAdapter()
+        val searchResultAdapter = FicSearchResultAdapter {
+            val intent = Intent(activity, ReaderActivity::class.java).putExtra(
+                ReaderActivity.EXTRA_FIC_ID,
+                it.id
+            )
+
+            startActivity(intent)
+        }
         binding.searchResultRv.layoutManager = LinearLayoutManager(activity)
         binding.searchResultRv.adapter = searchResultAdapter
         binding.searchResultRv.addItemDecoration(
@@ -74,7 +83,7 @@ class SearchFragment() : Fragment() {
     }
 }
 
-class FicSearchResultAdapter :
+class FicSearchResultAdapter constructor(private val onClick: ((PartialFic) -> Unit)) :
     PagingDataAdapter<PartialFic, FicSearchResultAdapter.FicSearchResultViewHolder>(
         PartialFicDiffCallback
     ) {
@@ -120,16 +129,24 @@ class FicSearchResultAdapter :
         parent: ViewGroup,
         viewType: Int
     ): FicSearchResultViewHolder {
-        return FicSearchResultViewHolder(
-            LayoutRowSearchFicBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
+        val view = LayoutRowSearchFicBinding.inflate(
+            LayoutInflater.from(
+                parent.context
             )
+        )
+
+        return FicSearchResultViewHolder(
+            view
         )
     }
 
     override fun onBindViewHolder(holder: FicSearchResultViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+
+        holder.itemView.rootView.setOnClickListener {
+            item?.let { onClick(it) }
+        }
+
+        holder.bind(item)
     }
 }

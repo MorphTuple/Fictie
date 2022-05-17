@@ -1,5 +1,6 @@
 package io.morphtuple.fictie.services
 
+import io.morphtuple.fictie.models.Fic
 import io.morphtuple.fictie.models.FicSearchQuery
 import io.morphtuple.fictie.models.PartialFic
 import org.jsoup.Jsoup
@@ -11,6 +12,16 @@ class AO3Service {
     }
 
     private fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
+
+    fun getFic(ficId: String): Fic? {
+        val resp = Jsoup.connect("$AO3Endpoint/works/$ficId").cookie("view_adult", "true").get()
+        val title = resp.select(".title.heading").first()?.text()
+        val userStuff = resp.select(".userstuff").html()
+
+        if (title == null) return null
+
+        return Fic(title = title, userStuff = userStuff)
+    }
 
     fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<PartialFic> {
         // TODO better query string serialization
@@ -24,7 +35,7 @@ class AO3Service {
             val fandoms = it.select(".fandoms.heading > a.tag").map { e -> e.text() }
             val tags = it.select(".tags.commas > li > a").map { e -> e.text() }
             val summary = it.select(".userstuff.summary").text().orEmpty()
-            val ficId = it.select(".header.module > .heading > a").first()?.attr("href").orEmpty()
+            val ficId = it.select(".header.module > .heading > a").first()?.attr("href").orEmpty().substringAfterLast("/")
             val author =
                 it.select(".header.module > .heading > a[rel=\"author\"]").first()?.text().orEmpty()
 
