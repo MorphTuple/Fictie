@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +32,18 @@ class SearchFragment() : Fragment() {
             binding.advancedOptionsLayout.toggle()
         }
 
-        binding.searchBtn.setOnClickListener {
+        val searchFunc = fun() {
             viewModel.search(binding.anyFieldEt.text.toString())
+        }
+
+        binding.searchBtn.setOnClickListener {
+            searchFunc()
+        }
+
+        binding.anyFieldEt.setOnEditorActionListener { _, i, _ ->
+            if (i == EditorInfo.IME_ACTION_SEARCH)
+                searchFunc()
+            return@setOnEditorActionListener true
         }
 
         val searchResultAdapter = FicSearchResultAdapter()
