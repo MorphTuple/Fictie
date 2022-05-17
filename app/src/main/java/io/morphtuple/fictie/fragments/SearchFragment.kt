@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.databinding.FragmentSearchBinding
@@ -15,6 +17,10 @@ import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
 import io.morphtuple.fictie.models.PartialFic
 import io.morphtuple.fictie.models.PartialFicDiffCallback
 import io.morphtuple.fictie.toCommaString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment() : Fragment() {
@@ -32,8 +38,26 @@ class SearchFragment() : Fragment() {
             binding.advancedOptionsLayout.toggle()
         }
 
+        val searchResultAdapter = FicSearchResultAdapter()
+        binding.searchResultRv.layoutManager = LinearLayoutManager(activity)
+        binding.searchResultRv.adapter = searchResultAdapter
+        binding.searchResultRv.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                GridLayoutManager.VERTICAL
+            )
+        )
+
+        lifecycleScope.launch {
+            viewModel.searchFlow.collectLatest { pagingData ->
+                searchResultAdapter.submitData(
+                    pagingData
+                )
+            }
+        }
+
         val searchFunc = fun() {
-            viewModel.search(binding.anyFieldEt.text.toString())
+            viewModel.anyField.value = binding.anyFieldEt.text.toString()
         }
 
         binding.searchBtn.setOnClickListener {
@@ -46,33 +70,20 @@ class SearchFragment() : Fragment() {
             return@setOnEditorActionListener true
         }
 
-        val searchResultAdapter = FicSearchResultAdapter()
-        binding.searchResultRv.layoutManager = LinearLayoutManager(activity)
-        binding.searchResultRv.adapter = searchResultAdapter
-        binding.searchResultRv.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                GridLayoutManager.VERTICAL
-            )
-        )
-
-        viewModel.liveSearchResult.observe(viewLifecycleOwner) {
-            if (it != null) searchResultAdapter.submitList(it)
-        }
-
         return binding.root
     }
 }
 
 class FicSearchResultAdapter :
-    ListAdapter<PartialFic, FicSearchResultAdapter.FicSearchResultViewHolder>(
+    PagingDataAdapter<PartialFic, FicSearchResultAdapter.FicSearchResultViewHolder>(
         PartialFicDiffCallback
     ) {
     class FicSearchResultViewHolder constructor(private var binding: LayoutRowSearchFicBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(partialFic: PartialFic) {
+        fun bind(partialFic: PartialFic?) {
+            if (partialFic == null) return
             binding.titleTv.text = partialFic.title
             binding.authorTv.text = partialFic.author
             binding.tagsTv.text = partialFic.tags.joinToString(", ")

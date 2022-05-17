@@ -10,10 +10,13 @@ class AO3Service {
         private const val AO3Endpoint = "https://archiveofourown.org/"
     }
 
-    fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
+    private fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
 
-    fun search(searchQuery: FicSearchQuery): List<PartialFic> {
-        val resp = Jsoup.connect(AO3Endpoint + "/works/search" + searchQuery.toQueryString()).get()
+    fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<PartialFic> {
+        // TODO better query string serialization
+        val resp =
+            Jsoup.connect(AO3Endpoint + "/works/search" + searchQuery.toQueryString() + "&page=" + pageIndex)
+                .get()
         val list = resp.select(".work.index.group > li")
 
         return list.map {
