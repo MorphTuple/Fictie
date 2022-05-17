@@ -27,4 +27,7 @@
 
     <color name="sw_green">#05c46b</color>
     <color name="sw_yellow">#ffc048</color>
+
+    <color name="ca_green">#1dd1a1</color>
+    <color name="ca_green_dark">#10ac84</color>
 </resources>

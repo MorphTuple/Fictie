@@ -16,14 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="12dp">
+            android:layout_marginTop="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -46,6 +46,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/d_padding_margin"
                     android:layout_weight="0.2"
+                    android:background="@drawable/shape_rounded"
                     android:backgroundTint="?android:attr/colorPrimary"
                     android:src="@drawable/baseline_search_black_24dp"
                     android:tint="?android:attr/textColorPrimaryInverse" />
@@ -55,14 +56,15 @@
         <RelativeLayout
             android:id="@+id/advancedSearchBtn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d_icon_size_xx"
-            android:focusable="true"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/d_padding_margin"
             android:clickable="true"
+            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/action_advanced_search"
                 android:textAlignment="center" />
