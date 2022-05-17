@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <!-- Search Bar -->
@@ -31,6 +31,7 @@
                     app:startIconDrawable="@drawable/baseline_book_black_24dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/anyFieldEt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionSearch"
@@ -40,6 +41,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/searchBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/d_padding_margin"
@@ -53,7 +55,8 @@
         <RelativeLayout
             android:id="@+id/advancedSearchBtn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d_icon_size_x"
+            android:layout_height="@dimen/d_icon_size_xx"
+            android:focusable="true"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -81,6 +84,11 @@
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchResultRv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
