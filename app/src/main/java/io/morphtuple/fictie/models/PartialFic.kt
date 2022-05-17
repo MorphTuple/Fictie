@@ -8,7 +8,15 @@ data class PartialFic(
     val fandoms: List<String>,
     val tags: List<String>,
     val summary: String,
-    val author: String
+    val author: String,
+
+    val language: String,
+    val wordCount: Int?,
+    val chapters: String,
+    val commentCount: Int?,
+    val kudos: Int?,
+    val bookmarkCount: Int?,
+    val hitCount: Int?
 )
 
 // TODO inherit an IDable, and use one diff callback

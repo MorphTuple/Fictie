@@ -10,6 +10,8 @@ class AO3Service {
         private const val AO3Endpoint = "https://archiveofourown.org/"
     }
 
+    fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
+
     fun search(searchQuery: FicSearchQuery): List<PartialFic> {
         val resp = Jsoup.connect(AO3Endpoint + "/works/search" + searchQuery.toQueryString()).get()
         val list = resp.select(".work.index.group > li")
@@ -23,13 +25,30 @@ class AO3Service {
             val author =
                 it.select(".header.module > .heading > a[rel=\"author\"]").first()?.text().orEmpty()
 
+            val language = it.select("dd.language").first()?.text().orEmpty()
+            val wordCount = it.select("dd.words").first()?.text()?.parseIntOrNullComma()
+            val chapters = it.select("dd.chapters").first()?.text().orEmpty()
+            val commentCount =
+                it.select("dd.comments > a").first()?.text()?.parseIntOrNullComma()
+            val kudos = it.select("dd.kudos > a").first()?.text()?.parseIntOrNullComma()
+            val bookmarkCount = it.select("dd.bookmarks > a").first()?.text()?.parseIntOrNullComma()
+            val hits = it.select("dd.hits").first()?.text()?.parseIntOrNullComma()
+
             PartialFic(
                 id = ficId,
                 title = title,
                 fandoms = fandoms,
                 tags = tags,
                 summary = summary,
-                author = author
+                author = author,
+
+                language = language,
+                wordCount = wordCount,
+                chapters = chapters,
+                commentCount = commentCount,
+                kudos = kudos,
+                bookmarkCount = bookmarkCount,
+                hitCount = hits
             )
         }.toList()
     }
