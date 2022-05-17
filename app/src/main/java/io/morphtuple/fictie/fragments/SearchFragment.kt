@@ -108,6 +108,11 @@ class FicSearchResultAdapter :
             binding.kudosCountTv.text = "💖 ${partialFic.kudos.toCommaString()}"
             binding.bookmarkCountTv.text = "📗 ${partialFic.bookmarkCount.toCommaString()}"
             binding.hitsTv.text = "👀 ${partialFic.hitCount.toCommaString()}"
+
+            binding.ratingTv.text = partialFic.rating
+            binding.categoryTv.text = partialFic.category
+            binding.warningTv.text = partialFic.warning
+            binding.statusTv.text = partialFic.status
         }
     }
 

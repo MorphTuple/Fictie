@@ -37,6 +37,14 @@ class AO3Service {
             val bookmarkCount = it.select("dd.bookmarks > a").first()?.text()?.parseIntOrNullComma()
             val hits = it.select("dd.hits").first()?.text()?.parseIntOrNullComma()
 
+            val requiredTags =
+                it.select("ul.required-tags > li > a > span > .text").map { e -> e.text() }
+
+            val rating = requiredTags[0].orEmpty()
+            val warning = requiredTags[1].orEmpty()
+            val category = requiredTags[2].orEmpty()
+            val status = requiredTags[3].orEmpty()
+
             PartialFic(
                 id = ficId,
                 title = title,
@@ -51,7 +59,12 @@ class AO3Service {
                 commentCount = commentCount,
                 kudos = kudos,
                 bookmarkCount = bookmarkCount,
-                hitCount = hits
+                hitCount = hits,
+
+                rating = rating,
+                warning = warning,
+                category = category,
+                status = status
             )
         }.toList()
     }

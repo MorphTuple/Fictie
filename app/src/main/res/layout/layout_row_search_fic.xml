@@ -26,6 +26,34 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name" />
 
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/d_padding_margin"
+            app:flexWrap="wrap">
+
+            <TextView
+                android:id="@+id/ratingTv"
+                style="@style/breadCrumbRequiredTagTv"
+                android:backgroundTint="@color/rp_gray" />
+
+            <TextView
+                android:id="@+id/categoryTv"
+                style="@style/breadCrumbRequiredTagTv"
+                android:backgroundTint="@color/rp_gray" />
+
+            <TextView
+                android:id="@+id/warningTv"
+                style="@style/breadCrumbRequiredTagTv"
+                android:backgroundTint="@color/rp_gray" />
+
+            <TextView
+                android:id="@+id/statusTv"
+                style="@style/breadCrumbRequiredTagTv"
+                android:backgroundTint="@color/rp_gray" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
         <TextView
             android:id="@+id/tagsTv"
             android:layout_width="wrap_content"
@@ -55,37 +83,37 @@
 
             <TextView
                 android:id="@+id/languageTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/rp_gray" />
 
             <TextView
                 android:id="@+id/wordsTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/rp_blue" />
 
             <TextView
                 android:id="@+id/chapters_tv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/rp_red" />
 
             <TextView
                 android:id="@+id/commentCountTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/rp_purple" />
 
             <TextView
                 android:id="@+id/kudosCountTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/rp_pink" />
 
             <TextView
                 android:id="@+id/bookmarkCountTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/sw_green" />
 
             <TextView
                 android:id="@+id/hitsTv"
-                style="@style/breadCrumbTv"
+                style="@style/breadCrumbStatTv"
                 android:backgroundTint="@color/sw_yellow" />
 
         </com.google.android.flexbox.FlexboxLayout>
