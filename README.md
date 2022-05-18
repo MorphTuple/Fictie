@@ -23,7 +23,7 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 - [ ] Notification Subscription on new by search query
 - [ ] Notification Subscription on new chapter
 - [ ] Notification Subscription on new by user
-- [ ] Open With "Fictia"
+- [ ] Open With "Fictie"
 - [ ] Browse by tag
 - [ ] Browse by user
 
