@@ -1,5 +1,6 @@
 package io.morphtuple.fictie.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.adapters.PagingPartialFicResultAdapter
+import io.morphtuple.fictie.common.hideKeyboard
 import io.morphtuple.fictie.databinding.FragmentSearchBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -62,6 +64,9 @@ class SearchFragment : Fragment() {
         }
 
         val searchFunc = fun() {
+            binding.anyFieldEt.clearFocus()
+            this.hideKeyboard()
+
             viewModel.anyField.value = binding.anyFieldEt.text.toString()
         }
 
