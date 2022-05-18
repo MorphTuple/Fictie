@@ -12,7 +12,7 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 
 - [x] Search
 - [ ] Advanced Search
-- [ ] Bookmarking
+- [x] Bookmarking
 - [ ] Offline Reading
 - [ ] Offline Image Asset Store
 - [ ] Remember last scroll position
