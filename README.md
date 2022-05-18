@@ -1,4 +1,5 @@
 # Fictie
+![Fictie Icon](https://github.com/MorphTuple/Fictie/blob/trunk/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png?raw=true)
 
 Fictie (/ˈfɪk.si/) is an [archiveofourown.org](https://archiveofourown.org) reader for Android
 written in Kotlin.
@@ -22,7 +23,7 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 - [ ] Notification Subscription on new by search query
 - [ ] Notification Subscription on new chapter
 - [ ] Notification Subscription on new by user
-- [ ] Open With "Fictia"
+- [ ] Open With "Fictie"
 - [ ] Browse by tag
 - [ ] Browse by user
 
