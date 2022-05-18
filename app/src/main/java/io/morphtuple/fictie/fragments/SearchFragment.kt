@@ -13,14 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.*
 import dagger.hilt.android.AndroidEntryPoint
+import io.morphtuple.fictie.R
 import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.databinding.FragmentSearchBinding
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
-import io.morphtuple.fictie.models.PartialFic
-import io.morphtuple.fictie.models.PartialFicDiffCallback
+import io.morphtuple.fictie.models.MarkedPartialFic
+import io.morphtuple.fictie.models.MarkedPartialFicDiffCallback
 import io.morphtuple.fictie.toCommaString
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -40,14 +39,17 @@ class SearchFragment() : Fragment() {
             binding.advancedOptionsLayout.toggle()
         }
 
-        val searchResultAdapter = FicSearchResultAdapter {
+        val searchResultAdapter = FicSearchResultAdapter({
             val intent = Intent(activity, ReaderActivity::class.java).putExtra(
                 ReaderActivity.EXTRA_FIC_ID,
-                it.id
+                it.partialFic.id
             )
 
             startActivity(intent)
-        }
+        }, {
+            viewModel.bookmark(it.partialFic)
+        })
+
         binding.searchResultRv.layoutManager = LinearLayoutManager(activity)
         binding.searchResultRv.adapter = searchResultAdapter
         binding.searchResultRv.addItemDecoration(
@@ -83,16 +85,25 @@ class SearchFragment() : Fragment() {
     }
 }
 
-class FicSearchResultAdapter constructor(private val onClick: ((PartialFic) -> Unit)) :
-    PagingDataAdapter<PartialFic, FicSearchResultAdapter.FicSearchResultViewHolder>(
-        PartialFicDiffCallback
+class FicSearchResultAdapter constructor(
+    private val onClick: ((MarkedPartialFic) -> Unit),
+    private val onBookmarkClicked: ((MarkedPartialFic) -> Unit)
+) :
+    PagingDataAdapter<MarkedPartialFic, FicSearchResultAdapter.FicSearchResultViewHolder>(
+        MarkedPartialFicDiffCallback
     ) {
     class FicSearchResultViewHolder constructor(private var binding: LayoutRowSearchFicBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(partialFic: PartialFic?) {
-            if (partialFic == null) return
+        fun bind(
+            markedPartialFic: MarkedPartialFic?,
+            onBookmarkClicked: (MarkedPartialFic) -> Unit
+        ) {
+            if (markedPartialFic == null) return
+            val partialFic = markedPartialFic.partialFic
+            var bookmarked = markedPartialFic.bookmarked
+
             binding.titleTv.text = partialFic.title
             binding.authorTv.text = partialFic.author
             binding.tagsTv.text = partialFic.tags.joinToString(", ")
@@ -122,6 +133,22 @@ class FicSearchResultAdapter constructor(private val onClick: ((PartialFic) -> U
             binding.categoryTv.text = partialFic.category
             binding.warningTv.text = partialFic.warning
             binding.statusTv.text = partialFic.status
+
+            val triggerBookmarked = fun(){
+                binding.bookmarkBtn.setImageResource(
+                    if (bookmarked)
+                        R.drawable.baseline_bookmark_black_24dp else
+                        R.drawable.baseline_bookmark_border_black_24dp
+                )
+            }
+
+            triggerBookmarked()
+
+            binding.bookmarkBtn.setOnClickListener {
+                onBookmarkClicked(markedPartialFic)
+                bookmarked = !bookmarked
+                triggerBookmarked()
+            }
         }
     }
 
@@ -147,6 +174,6 @@ class FicSearchResultAdapter constructor(private val onClick: ((PartialFic) -> U
             item?.let { onClick(it) }
         }
 
-        holder.bind(item)
+        holder.bind(item, onBookmarkClicked)
     }
 }

@@ -55,7 +55,14 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation 'com.google.code.gson:gson:2.9.0'
 
+    def room_version = "2.4.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    kapt "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

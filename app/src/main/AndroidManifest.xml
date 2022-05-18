@@ -19,7 +19,6 @@
         <activity
             android:name=".activities.reader.ReaderActivity"
             android:exported="false"
-            android:label="@string/title_activity_reader"
             android:theme="@style/Theme.Fictie.NoActionBar" />
         <activity
             android:name=".activities.main.MainActivity"

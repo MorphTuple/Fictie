@@ -3,7 +3,7 @@ package io.morphtuple.fictie.services
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import io.morphtuple.fictie.models.FicSearchQuery
-import io.morphtuple.fictie.models.PartialFic
+import io.morphtuple.fictie.models.MarkedPartialFic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.Exception
@@ -11,15 +11,15 @@ import java.lang.Exception
 class AO3SearchPagingSource(
     private val aO3Service: AO3Service,
     private val searchQuery: FicSearchQuery
-) : PagingSource<Int, PartialFic>() {
-    override fun getRefreshKey(state: PagingState<Int, PartialFic>): Int? {
+) : PagingSource<Int, MarkedPartialFic>() {
+    override fun getRefreshKey(state: PagingState<Int, MarkedPartialFic>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PartialFic> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MarkedPartialFic> {
         return try {
             val pageIndex = params.key ?: 1
 

@@ -1,12 +1,17 @@
 package io.morphtuple.fictie.services
 
+import android.database.sqlite.SQLiteConstraintException
+import io.morphtuple.fictie.dao.BookmarkedFicDao
 import io.morphtuple.fictie.models.Fic
 import io.morphtuple.fictie.models.FicSearchQuery
+import io.morphtuple.fictie.models.MarkedPartialFic
 import io.morphtuple.fictie.models.PartialFic
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
+import javax.inject.Inject
 
-class AO3Service {
+class AO3Service @Inject constructor(
+    private val bookmarkedFicDao: BookmarkedFicDao
+) {
     companion object {
         private const val AO3Endpoint = "https://archiveofourown.org/"
     }
@@ -23,7 +28,17 @@ class AO3Service {
         return Fic(title = title, userStuff = userStuff)
     }
 
-    fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<PartialFic> {
+    fun toggleBookmark(partialFic: PartialFic): Boolean {
+        return try {
+            bookmarkedFicDao.insertAll(partialFic)
+            true
+        } catch (e: SQLiteConstraintException) {
+            bookmarkedFicDao.delete(partialFic)
+            false
+        }
+    }
+
+    fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<MarkedPartialFic> {
         // TODO better query string serialization
         val resp =
             Jsoup.connect(AO3Endpoint + "/works/search" + searchQuery.toQueryString() + "&page=" + pageIndex)
@@ -35,7 +50,8 @@ class AO3Service {
             val fandoms = it.select(".fandoms.heading > a.tag").map { e -> e.text() }
             val tags = it.select(".tags.commas > li > a").map { e -> e.text() }
             val summary = it.select(".userstuff.summary").text().orEmpty()
-            val ficId = it.select(".header.module > .heading > a").first()?.attr("href").orEmpty().substringAfterLast("/")
+            val ficId = it.select(".header.module > .heading > a").first()?.attr("href").orEmpty()
+                .substringAfterLast("/")
             val author =
                 it.select(".header.module > .heading > a[rel=\"author\"]").first()?.text().orEmpty()
 
@@ -56,26 +72,30 @@ class AO3Service {
             val category = requiredTags[2].orEmpty()
             val status = requiredTags[3].orEmpty()
 
-            PartialFic(
-                id = ficId,
-                title = title,
-                fandoms = fandoms,
-                tags = tags,
-                summary = summary,
-                author = author,
+            val bookmarked = bookmarkedFicDao.exists(ficId)
 
-                language = language,
-                wordCount = wordCount,
-                chapters = chapters,
-                commentCount = commentCount,
-                kudos = kudos,
-                bookmarkCount = bookmarkCount,
-                hitCount = hits,
+            MarkedPartialFic(
+                PartialFic(
+                    id = ficId,
+                    title = title,
+                    fandoms = fandoms,
+                    tags = tags,
+                    summary = summary,
+                    author = author,
 
-                rating = rating,
-                warning = warning,
-                category = category,
-                status = status
+                    language = language,
+                    wordCount = wordCount,
+                    chapters = chapters,
+                    commentCount = commentCount,
+                    kudos = kudos,
+                    bookmarkCount = bookmarkCount,
+                    hitCount = hits,
+
+                    rating = rating,
+                    warning = warning,
+                    category = category,
+                    status = status
+                ), bookmarked != null
             )
         }.toList()
     }
