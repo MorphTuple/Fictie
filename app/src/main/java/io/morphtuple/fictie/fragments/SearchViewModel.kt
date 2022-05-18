@@ -28,7 +28,7 @@ class SearchViewModel @Inject constructor(
         }.flow.cachedIn(viewModelScope)
     }
 
-    fun bookmark(partialFic: PartialFic) {
+    fun toggleBookmark(partialFic: PartialFic) {
         viewModelScope.launch(Dispatchers.IO) {
             ao3Service.toggleBookmark(partialFic)
         }

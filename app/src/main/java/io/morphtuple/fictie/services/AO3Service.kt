@@ -1,6 +1,8 @@
 package io.morphtuple.fictie.services
 
 import android.database.sqlite.SQLiteConstraintException
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import io.morphtuple.fictie.dao.BookmarkedFicDao
 import io.morphtuple.fictie.models.Fic
 import io.morphtuple.fictie.models.FicSearchQuery
@@ -28,6 +30,10 @@ class AO3Service @Inject constructor(
         return Fic(title = title, userStuff = userStuff)
     }
 
+    fun getLibraryLiveData(): LiveData<List<PartialFic>> {
+        return bookmarkedFicDao.loadAllPartialFic()
+    }
+
     fun toggleBookmark(partialFic: PartialFic): Boolean {
         return try {
             bookmarkedFicDao.insertAll(partialFic)
@@ -38,6 +44,7 @@ class AO3Service @Inject constructor(
         }
     }
 
+    // TODO have separate bookmarks table with proper relations
     fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<MarkedPartialFic> {
         // TODO better query string serialization
         val resp =
