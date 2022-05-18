@@ -33,17 +33,6 @@ data class MarkedPartialFic(
     val bookmarked: Boolean
 )
 
-// TODO inherit an IDable, and use one diff callback
-object PartialFicDiffCallback : DiffUtil.ItemCallback<PartialFic>() {
-    override fun areItemsTheSame(oldItem: PartialFic, newItem: PartialFic): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: PartialFic, newItem: PartialFic): Boolean {
-        return oldItem.id == newItem.id
-    }
-}
-
 object MarkedPartialFicDiffCallback : DiffUtil.ItemCallback<MarkedPartialFic>() {
     override fun areItemsTheSame(oldItem: MarkedPartialFic, newItem: MarkedPartialFic): Boolean {
         return oldItem.partialFic.id == newItem.partialFic.id
