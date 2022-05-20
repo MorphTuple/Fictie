@@ -1,12 +1,11 @@
 package io.morphtuple.fictie.models
 
-import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "partial_fic")
 data class PartialFic(
-    @PrimaryKey val id: String,
+    @PrimaryKey override val id: String,
     val title: String,
     // TODO proper relationship storing, so it can be queried by tags/fandoms in Room
     val fandoms: List<String>,
@@ -26,19 +25,5 @@ data class PartialFic(
     val warning: String,
     val category: String,
     val status: String
-)
+) : IDable
 
-data class MarkedPartialFic(
-    val partialFic: PartialFic,
-    val bookmarked: Boolean
-)
-
-object MarkedPartialFicDiffCallback : DiffUtil.ItemCallback<MarkedPartialFic>() {
-    override fun areItemsTheSame(oldItem: MarkedPartialFic, newItem: MarkedPartialFic): Boolean {
-        return oldItem.partialFic.id == newItem.partialFic.id
-    }
-
-    override fun areContentsTheSame(oldItem: MarkedPartialFic, newItem: MarkedPartialFic): Boolean {
-        return oldItem.partialFic.id == newItem.partialFic.id
-    }
-}

@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.morphtuple.fictie.models.FicSearchQuery
 import io.morphtuple.fictie.models.PartialFic
 import io.morphtuple.fictie.services.AO3SearchPagingSource
 import io.morphtuple.fictie.services.AO3Service
@@ -24,7 +23,7 @@ class SearchViewModel @Inject constructor(
 
     val searchFlow = anyField.flatMapLatest { q ->
         Pager(PagingConfig(pageSize = 20, enablePlaceholders = false)) {
-            AO3SearchPagingSource(ao3Service, FicSearchQuery(q))
+            AO3SearchPagingSource(ao3Service, q)
         }.flow.cachedIn(viewModelScope)
     }
 

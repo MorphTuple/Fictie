@@ -2,13 +2,12 @@ package io.morphtuple.fictie.services
 
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import io.morphtuple.fictie.dao.BookmarkedFicDao
-import io.morphtuple.fictie.models.Fic
-import io.morphtuple.fictie.models.FicSearchQuery
-import io.morphtuple.fictie.models.MarkedPartialFic
+import io.morphtuple.fictie.models.FicUserStuff
+import io.morphtuple.fictie.models.Marked
 import io.morphtuple.fictie.models.PartialFic
 import org.jsoup.Jsoup
+import java.net.URLEncoder
 import javax.inject.Inject
 
 class AO3Service @Inject constructor(
@@ -20,14 +19,14 @@ class AO3Service @Inject constructor(
 
     private fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
 
-    fun getFic(ficId: String): Fic? {
+    fun getFic(ficId: String): FicUserStuff? {
         val resp = Jsoup.connect("$AO3Endpoint/works/$ficId").cookie("view_adult", "true").get()
         val title = resp.select(".title.heading").first()?.text()
         val userStuff = resp.select(".userstuff").html()
 
         if (title == null) return null
 
-        return Fic(title = title, userStuff = userStuff)
+        return FicUserStuff(title = title, userStuff = userStuff)
     }
 
     fun getLibraryLiveData(): LiveData<List<PartialFic>> {
@@ -44,11 +43,15 @@ class AO3Service @Inject constructor(
         }
     }
 
+    private fun toQueryString(searchQuery: String): String {
+        return "?work_search[query]=${URLEncoder.encode(searchQuery, "utf-8")}"
+    }
+
     // TODO have separate bookmarks table with proper relations
-    fun search(searchQuery: FicSearchQuery, pageIndex: Int): List<MarkedPartialFic> {
+    fun search(searchQuery: String, pageIndex: Int): List<Marked<PartialFic>> {
         // TODO better query string serialization
         val resp =
-            Jsoup.connect(AO3Endpoint + "/works/search" + searchQuery.toQueryString() + "&page=" + pageIndex)
+            Jsoup.connect(AO3Endpoint + "/works/search" + toQueryString(searchQuery) + "&page=" + pageIndex)
                 .get()
         val list = resp.select(".work.index.group > li")
 
@@ -81,7 +84,7 @@ class AO3Service @Inject constructor(
 
             val bookmarked = bookmarkedFicDao.exists(ficId)
 
-            MarkedPartialFic(
+            Marked(
                 PartialFic(
                     id = ficId,
                     title = title,

@@ -1,6 +1,5 @@
 package io.morphtuple.fictie.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -38,12 +37,12 @@ class SearchFragment : Fragment() {
         val searchResultAdapter = PagingPartialFicResultAdapter({
             val intent = Intent(activity, ReaderActivity::class.java).putExtra(
                 ReaderActivity.EXTRA_FIC_ID,
-                it.partialFic.id
+                it.data.id
             )
 
             startActivity(intent)
         }, {
-            viewModel.toggleBookmark(it.partialFic)
+            viewModel.toggleBookmark(it.data)
         })
 
         binding.searchResultRv.layoutManager = LinearLayoutManager(activity)

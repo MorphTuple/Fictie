@@ -5,7 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import io.morphtuple.fictie.R
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
-import io.morphtuple.fictie.models.MarkedPartialFic
+import io.morphtuple.fictie.models.Marked
+import io.morphtuple.fictie.models.PartialFic
 import io.morphtuple.fictie.toCommaString
 
 class PartialFicViewHolder constructor(private var binding: LayoutRowSearchFicBinding) :
@@ -13,12 +14,12 @@ class PartialFicViewHolder constructor(private var binding: LayoutRowSearchFicBi
 
     @SuppressLint("SetTextI18n")
     fun bind(
-        markedPartialFic: MarkedPartialFic?,
-        onBookmarkClicked: (MarkedPartialFic) -> Unit
+        markedPartialFic: Marked<PartialFic>?,
+        onBookmarkClicked: (Marked<PartialFic>) -> Unit
     ) {
         if (markedPartialFic == null) return
-        val partialFic = markedPartialFic.partialFic
-        var bookmarked = markedPartialFic.bookmarked
+        val partialFic = markedPartialFic.data
+        var bookmarked = markedPartialFic.marked
 
         binding.titleTv.text = partialFic.title
         binding.authorTv.text = partialFic.author

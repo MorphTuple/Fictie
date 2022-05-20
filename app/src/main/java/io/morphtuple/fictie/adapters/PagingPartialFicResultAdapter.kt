@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
-import io.morphtuple.fictie.models.MarkedPartialFic
-import io.morphtuple.fictie.models.MarkedPartialFicDiffCallback
+import io.morphtuple.fictie.models.*
 
 class PagingPartialFicResultAdapter constructor(
-    private val onClick: ((MarkedPartialFic) -> Unit),
-    private val onBookmarkClicked: ((MarkedPartialFic) -> Unit)
+    private val onClick: ((Marked<PartialFic>) -> Unit),
+    private val onBookmarkClicked: ((Marked<PartialFic>) -> Unit)
 ) :
-    PagingDataAdapter<MarkedPartialFic, PartialFicViewHolder>(
-        MarkedPartialFicDiffCallback
+    PagingDataAdapter<Marked<PartialFic>, PartialFicViewHolder>(
+        MarkedDiffCallback()
     ) {
 
     override fun onCreateViewHolder(

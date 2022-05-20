@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.adapters.ListPartialFicResultAdapter
 import io.morphtuple.fictie.databinding.FragmentLibraryBinding
-import io.morphtuple.fictie.models.MarkedPartialFic
+import io.morphtuple.fictie.models.Marked
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,12 +32,12 @@ class LibraryFragment : Fragment() {
         val adapter = ListPartialFicResultAdapter({
             val intent = Intent(activity, ReaderActivity::class.java).putExtra(
                 ReaderActivity.EXTRA_FIC_ID,
-                it.partialFic.id
+                it.data.id
             )
 
             startActivity(intent)
         }, {
-            viewModel.toggleBookmark(it.partialFic)
+            viewModel.toggleBookmark(it.data)
         })
 
         lifecycleScope.launch {
@@ -46,7 +46,7 @@ class LibraryFragment : Fragment() {
             val liveData = viewModel.getLibraryLiveData()
             liveData.observe(viewLifecycleOwner) { listFic ->
                 lifecycleScope.launch {
-                    adapter.submitList(listFic.map { e -> MarkedPartialFic(e, true) })
+                    adapter.submitList(listFic.map { e -> Marked(e, true) })
                 }
             }
         }
