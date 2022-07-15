@@ -7,8 +7,8 @@
     android:orientation="vertical"
     tools:context=".activities.main.MainActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/mainPager"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -19,6 +19,9 @@
         android:id="@+id/mainBnv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:windowBackground"
+        app:backgroundTint="?android:windowBackground"
+        app:elevation="0dp"
         app:menu="@menu/menu_main_bnv" />
 
 </LinearLayout>

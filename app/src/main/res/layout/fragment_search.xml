@@ -27,8 +27,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:helperText="@string/helper_any_field"
                     android:hint="@string/hint_any_field"
+                    app:helperText="@string/helper_any_field"
                     app:startIconDrawable="@drawable/baseline_book_black_24dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -58,10 +58,10 @@
             android:id="@+id/advancedSearchBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/d_padding_margin"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:foreground="?android:attr/selectableItemBackground"
+            android:paddingVertical="@dimen/d_padding_margin">
 
             <TextView
                 android:layout_width="match_parent"
@@ -87,11 +87,17 @@
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 
+        <!-- https://stackoverflow.com/a/48905734 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchResultRv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:fastScrollEnabled="true"
+            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+            app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+            app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+            app:fastScrollVerticalTrackDrawable="@drawable/line_drawable" />
 
     </LinearLayout>
 
