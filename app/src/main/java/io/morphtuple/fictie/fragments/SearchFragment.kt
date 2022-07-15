@@ -66,7 +66,19 @@ class SearchFragment : Fragment() {
             binding.anyFieldEt.clearFocus()
             this.hideKeyboard()
 
-            viewModel.anyField.value = binding.anyFieldEt.text.toString()
+            val q = binding.anyFieldEt.text.toString().trim()
+
+            if (q.lowercase().startsWith("id:")) {
+                val intent = Intent(activity, ReaderActivity::class.java).putExtra(
+                    ReaderActivity.EXTRA_FIC_ID,
+                    q.substring(3)
+                )
+
+                startActivity(intent)
+                return
+            }
+
+            viewModel.anyField.value = q
         }
 
         binding.searchBtn.setOnClickListener {

@@ -31,6 +31,7 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 - [ ] Open With "Fictie"
 - [ ] Browse by tag
 - [ ] Browse by user
+- [ ] Tagged Library
 
 
 ## Contributing
