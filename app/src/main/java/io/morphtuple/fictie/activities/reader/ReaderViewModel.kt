@@ -16,9 +16,17 @@ class ReaderViewModel @Inject constructor(private val ao3Service: AO3Service) : 
         MutableLiveData<FicUserStuff?>(null)
     }
 
+    val networkError by lazy {
+        MutableLiveData<Boolean>(false)
+    }
+
     fun getFic(ficId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            fic.postValue(ao3Service.getFic(ficId))
+            try {
+                fic.postValue(ao3Service.getFic(ficId))
+            } catch (e: Exception) {
+                networkError.postValue(true)
+            }
         }
     }
 }

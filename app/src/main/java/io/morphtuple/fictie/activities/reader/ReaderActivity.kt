@@ -3,6 +3,7 @@ package io.morphtuple.fictie.activities.reader
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Base64
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +39,14 @@ class ReaderActivity : AppCompatActivity() {
             val encodedHtml = Base64.encodeToString(html.toByteArray(), Base64.NO_PADDING)
 
             binding.readerWebView.loadData(encodedHtml, "text/html", "base64")
+        }
+
+        // TODO better error handling
+        viewModel.networkError.observe(this) {
+            if (it) {
+                Toast.makeText(applicationContext, "Error fetching data :(", Toast.LENGTH_LONG).show()
+                finish()
+            }
         }
     }
 }

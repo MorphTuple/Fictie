@@ -1,11 +1,14 @@
 package io.morphtuple.fictie.activities.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.R
+import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.common.ui.FragmentBottomNavigationViewBinder
 import io.morphtuple.fictie.common.ui.ViewPagerBottomNavigationViewBinder
 import io.morphtuple.fictie.databinding.ActivityMainBinding
@@ -30,5 +33,14 @@ class MainActivity : FragmentActivity() {
             listOf(LibraryFragment(), SearchFragment(), SettingsFragment()),
             true
         )
+
+        if (intent?.data != null) {
+            val intent = Intent(this, ReaderActivity::class.java).putExtra(
+                ReaderActivity.EXTRA_FIC_ID,
+                intent?.data?.lastPathSegment
+            )
+
+            startActivity(intent)
+        }
     }
 }
