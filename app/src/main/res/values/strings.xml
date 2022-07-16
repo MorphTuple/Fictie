@@ -8,7 +8,36 @@
     <string name="hello_blank_fragment">Feature coming soon!</string>
 
     <string name="hint_any_field">Any Field</string>
+    <string name="helper_any_field">Type \"id:xxxxxxx\" to open by ID</string>
+
+    <string name="emoji_library_empty">😔</string>
+    <string name="heading_library_empty">Seems empty here!</string>
+    <string name="desc_library_empty">You should search for something and bookmark it!</string>
+
+    <string name="setting_theme">Theme</string>
+    <string name="desc_setting_theme">Change the application Theme</string>
 
     <string name="action_advanced_search">Advanced Search</string>
     <string name="notice_advanced_search">Advanced search coming soon</string>
+
+    <string-array name="setting_reader_theme_options">
+        <item>Follow application theme</item>
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+    <string-array name="setting_reader_theme_options_values">
+        <item>follow_application</item>
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+
+    <string-array name="setting_theme_options">
+        <item>System default</item>
+    </string-array>
+
+    <string-array name="setting_theme_options_values">
+        <item>system_default</item>
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
 </resources>

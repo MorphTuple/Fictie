@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.preference.ListPreference
+        android:defaultValue="system_default"
+        android:entries="@array/setting_theme_options"
+        android:entryValues="@array/setting_theme_options_values"
+        android:key="pref_theme"
+        android:summary="%s"
+        android:title="Application Theme"
+        app:useSimpleSummaryProvider="true" />
+
+    <androidx.preference.ListPreference
+        android:defaultValue="follow_application"
+        android:entries="@array/setting_reader_theme_options"
+        android:entryValues="@array/setting_reader_theme_options_values"
+        android:key="pref_reader_theme"
+        android:summary="%s"
+        android:title="Reader Theme"
+        app:useSimpleSummaryProvider="true" />
+
+    <androidx.preference.PreferenceCategory android:title="About">
+        <androidx.preference.Preference
+            android:summary="Version 0.1.1-prerelease"
+            android:title="Fictie by MorphTuple" />
+
+        <androidx.preference.Preference
+            android:summary="AGPL"
+            android:title="License" />
+
+        <androidx.preference.Preference android:title="Contribute to Fictie" />
+    </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>

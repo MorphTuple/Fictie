@@ -2,18 +2,19 @@ package io.morphtuple.fictie.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.activities.reader.ReaderActivity
 import io.morphtuple.fictie.adapters.ListPartialFicResultAdapter
 import io.morphtuple.fictie.databinding.FragmentLibraryBinding
-import io.morphtuple.fictie.models.MarkedPartialFic
+import io.morphtuple.fictie.models.Marked
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,12 +33,12 @@ class LibraryFragment : Fragment() {
         val adapter = ListPartialFicResultAdapter({
             val intent = Intent(activity, ReaderActivity::class.java).putExtra(
                 ReaderActivity.EXTRA_FIC_ID,
-                it.partialFic.id
+                it.data.id
             )
 
             startActivity(intent)
         }, {
-            viewModel.toggleBookmark(it.partialFic)
+            viewModel.toggleBookmark(it.data)
         })
 
         lifecycleScope.launch {
@@ -45,12 +46,13 @@ class LibraryFragment : Fragment() {
 
             val liveData = viewModel.getLibraryLiveData()
             liveData.observe(viewLifecycleOwner) { listFic ->
+                binding.emptyNotice.visibility = if (listFic.isEmpty()) View.VISIBLE else View.GONE
+
                 lifecycleScope.launch {
-                    adapter.submitList(listFic.map { e -> MarkedPartialFic(e, true) })
+                    adapter.submitList(listFic.map { e -> Marked(e, true) })
                 }
             }
         }
-
 
         binding.libraryRv.adapter = adapter
 

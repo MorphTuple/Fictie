@@ -1,6 +1,6 @@
 package io.morphtuple.fictie.models
 
-data class Fic(
+data class FicUserStuff(
     val title: String,
     val userStuff: String
 )

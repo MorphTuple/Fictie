@@ -2,19 +2,16 @@ package io.morphtuple.fictie.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
-import io.morphtuple.fictie.models.MarkedPartialFic
-import io.morphtuple.fictie.models.MarkedPartialFicDiffCallback
+import io.morphtuple.fictie.models.*
 
 class ListPartialFicResultAdapter constructor(
-    private val onClick: ((MarkedPartialFic) -> Unit),
-    private val onBookmarkClicked: ((MarkedPartialFic) -> Unit)
+    private val onClick: ((Marked<PartialFic>) -> Unit),
+    private val onBookmarkClicked: ((Marked<PartialFic>) -> Unit)
 ) :
-    ListAdapter<MarkedPartialFic, PartialFicViewHolder>(
-        MarkedPartialFicDiffCallback
+    ListAdapter<Marked<PartialFic>, PartialFicViewHolder>(
+        MarkedDiffCallback()
     ) {
 
     override fun onCreateViewHolder(

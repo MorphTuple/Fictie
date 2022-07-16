@@ -6,6 +6,8 @@
     tools:context=".activities.reader.ReaderActivity">
 
     <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:translationZ="1dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/d_padding_margin_x"
         android:layout_width="wrap_content"

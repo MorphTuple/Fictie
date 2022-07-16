@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.morphtuple.fictie" >
+    package="io.morphtuple.fictie">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".FictieApplication"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,18 +16,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fictie"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
             android:name=".activities.reader.ReaderActivity"
             android:exported="false"
-            android:theme="@style/Theme.Fictie.NoActionBar" />
+            android:theme="@style/Theme.Fictie.NoActionBar">
+
+        </activity>
         <activity
+            android:configChanges="uiMode"
             android:name=".activities.main.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="archiveofourown.org"
+                    android:pathPrefix="/works"
+                    android:scheme="https" />
+
+                <data
+                    android:host="archiveofourown.org"
+                    android:pathPrefix="/works"
+                    android:scheme="" />
             </intent-filter>
         </activity>
     </application>

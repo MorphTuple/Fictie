@@ -3,6 +3,7 @@ package io.morphtuple.fictie.common.ui
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationBarView
 
+// Unused now...
 object ViewPagerBottomNavigationViewBinder {
     fun bind(pager: ViewPager2, bnv: NavigationBarView, menuItems: List<Int>) {
         val oppositeMap = menuItems.mapIndexed { idx, el -> Pair(el, idx) }

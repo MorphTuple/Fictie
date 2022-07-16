@@ -19,7 +19,7 @@ android {
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "0.1-prerelease"
+        versionName "0.1.1-prerelease"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation 'com.google.dagger:hilt-android:2.42'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
     kapt 'com.google.dagger:hilt-compiler:2.42'
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -56,6 +57,7 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "androidx.paging:paging-runtime:3.1.1"
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 
     def room_version = "2.4.2"
 
