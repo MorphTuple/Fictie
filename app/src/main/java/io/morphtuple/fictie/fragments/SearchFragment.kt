@@ -53,6 +53,9 @@ class SearchFragment : Fragment() {
                 GridLayoutManager.VERTICAL
             )
         )
+        viewModel.netActivity.observe(requireActivity()) {
+            binding.netActivityIndicator.visibility = if (it) View.VISIBLE else View.GONE
+        }
 
         lifecycleScope.launch {
             viewModel.searchFlow.collectLatest { pagingData ->

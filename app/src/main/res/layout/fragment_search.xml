@@ -99,6 +99,12 @@
             app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
             app:fastScrollVerticalTrackDrawable="@drawable/line_drawable" />
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:indeterminate="true"
+            android:id="@+id/netActivityIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </FrameLayout>
