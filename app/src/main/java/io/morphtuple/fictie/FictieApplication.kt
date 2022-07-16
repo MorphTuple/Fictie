@@ -2,6 +2,8 @@ package io.morphtuple.fictie
 
 import android.app.Application
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -15,6 +17,12 @@ import javax.inject.Singleton
 
 @HiltAndroidApp
 class FictieApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val theme = sp.getString("app_theme", null)
+    }
 }
 
 @Module

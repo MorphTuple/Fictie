@@ -7,6 +7,7 @@
 
     <application
         android:name=".FictieApplication"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,6 +24,7 @@
 
         </activity>
         <activity
+            android:configChanges="uiMode"
             android:name=".activities.main.MainActivity"
             android:exported="true">
             <intent-filter>
