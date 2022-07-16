@@ -27,6 +27,8 @@ class ReaderActivity : AppCompatActivity() {
 
         binding = ActivityReaderBinding.inflate(layoutInflater)
         binding.readerWebView.setBackgroundColor(Color.TRANSPARENT)
+        binding.readerWebView.settings.builtInZoomControls = true
+        binding.readerWebView.settings.displayZoomControls = false
 
         setContentView(binding.root)
 
