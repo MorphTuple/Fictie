@@ -32,6 +32,7 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 - [ ] Browse by tag
 - [ ] Browse by user
 - [ ] Tagged Library
+- [ ] Multichapter Support
 
 
 ## Contributing
