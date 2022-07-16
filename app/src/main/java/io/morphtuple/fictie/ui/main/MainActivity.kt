@@ -1,17 +1,16 @@
-package io.morphtuple.fictie.activities.main
+package io.morphtuple.fictie.ui.main
 
-import android.app.UiModeManager
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.morphtuple.fictie.R
-import io.morphtuple.fictie.activities.reader.ReaderActivity
+import io.morphtuple.fictie.ui.reader.ReaderActivity
 import io.morphtuple.fictie.common.ui.FragmentBottomNavigationViewBinder
 import io.morphtuple.fictie.databinding.ActivityMainBinding
-import io.morphtuple.fictie.fragments.LibraryFragment
-import io.morphtuple.fictie.fragments.SearchFragment
-import io.morphtuple.fictie.fragments.SettingsFragment
+import io.morphtuple.fictie.ui.library.LibraryFragment
+import io.morphtuple.fictie.ui.search.SearchFragment
+import io.morphtuple.fictie.ui.settings.SettingsFragment
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {

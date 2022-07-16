@@ -13,7 +13,7 @@ class AO3SearchPagingSource(
     private val aO3Service: AO3Service,
     private val searchQuery: String
 ) : PagingSource<Int, Marked<PartialFic>>() {
-    val isLoading = MutableLiveData<Boolean>(false)
+    val isLoading = MutableLiveData(false)
 
     override fun getRefreshKey(state: PagingState<Int, Marked<PartialFic>>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

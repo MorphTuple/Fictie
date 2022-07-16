@@ -3,9 +3,7 @@ package io.morphtuple.fictie.services
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import io.morphtuple.fictie.dao.BookmarkedFicDao
-import io.morphtuple.fictie.models.FicUserStuff
-import io.morphtuple.fictie.models.Marked
-import io.morphtuple.fictie.models.PartialFic
+import io.morphtuple.fictie.models.*
 import org.jsoup.Jsoup
 import java.net.URLEncoder
 import javax.inject.Inject
@@ -19,14 +17,67 @@ class AO3Service @Inject constructor(
 
     private fun String.parseIntOrNullComma(): Int? = replace(",", "").toIntOrNull(radix = 10)
 
-    fun getFic(ficId: String): FicUserStuff? {
-        val resp = Jsoup.connect("$AO3Endpoint/works/$ficId").cookie("view_adult", "true").get()
+    fun getChapterElements(ficId: String, chapterId: String): List<FicElement> {
+        val list = mutableListOf<FicElement>()
+
+        val url = "$AO3Endpoint/works/$ficId/chapters/$chapterId"
+        val resp = Jsoup.connect(url).cookie("view_adult", "true").get()
+
+        val chapterTitleText = resp.select(".chapter > h3").first()?.text().orEmpty()
+
+        list.add(FicElement(chapterTitleText, FicElementType.CHAPTER))
+
+        resp.select(".userstuff.module").first()?.children()?.forEach {
+            if (it.`is`("p")) {
+                val imgCheck = it.select("img").first()
+
+                if (imgCheck != null) {
+                    list.add(FicElement("", FicElementType.IMAGE, imgCheck.attr("href")))
+                } else {
+                    list.add(FicElement(it.text(), FicElementType.PARAGRAPH))
+                }
+            } else if (it.`is`("hr")) list.add(FicElement(null, FicElementType.DIVIDER, null))
+        }
+
+        return list
+    }
+
+    fun getFic(ficId: String, chapterId: String? = null): FicPage? {
+        var url = "$AO3Endpoint/works/$ficId"
+        if (chapterId != null) url += "/chapters/$chapterId"
+
+        val resp = Jsoup.connect(url).cookie("view_adult", "true").get()
         val title = resp.select(".title.heading").first()?.text()
         val userStuff = resp.select(".userstuff").html()
 
         if (title == null) return null
 
-        return FicUserStuff(title = title, userStuff = userStuff)
+        val multiChapter = resp.select("#selected_id").first()
+
+        return FicPage(
+            title = title,
+            userStuff = userStuff,
+            isFicMultiChapter = multiChapter != null
+        )
+    }
+
+    fun getNavigation(ficId: String): FicNavigation {
+        val resp =
+            Jsoup.connect("$AO3Endpoint/works/$ficId/navigate").cookie("view_adult", "true").get()
+        val chapters = resp.select(".chapter.index.group > li").mapIndexed { idx, it ->
+            val a = it.select("a").first()
+            val href = a?.attr("href").orEmpty()
+            val chapterId = href.substringAfterLast("/")
+            val title = a?.text().orEmpty()
+            val date = it.select(".datetime").first()?.text()
+                ?.replace("(", "")
+                ?.replace(")", "")
+                .orEmpty()
+
+            FicIndex(idx + 1, title, ficId, chapterId, date)
+        }
+
+        return FicNavigation(ficId = ficId, chapters)
     }
 
     fun getLibraryLiveData(): LiveData<List<PartialFic>> {

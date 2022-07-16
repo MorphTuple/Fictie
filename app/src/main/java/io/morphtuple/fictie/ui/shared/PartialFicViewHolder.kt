@@ -1,4 +1,4 @@
-package io.morphtuple.fictie.adapters
+package io.morphtuple.fictie.ui.shared
 
 import android.annotation.SuppressLint
 import android.view.View

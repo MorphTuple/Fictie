@@ -20,6 +20,9 @@
     <string name="action_advanced_search">Advanced Search</string>
     <string name="notice_advanced_search">Advanced search coming soon</string>
 
+    <string name="test_paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque velit nec ex lacinia, sed cursus velit euismod. Sed nec vulputate erat. Nullam viverra lectus sem, id accumsan massa luctus nec. Sed semper imperdiet velit, semper pulvinar arcu. Vestibulum commodo dui vitae pulvinar convallis. Nullam fermentum tempus leo. Sed cursus elit quis volutpat pellentesque. Fusce eget massa vel massa lacinia ullamcorper ac sit amet mi. Vestibulum vitae quam sagittis, dapibus risus at, porta urna. Aenean porttitor commodo viverra. Donec sit amet auctor velit. Maecenas pulvinar sapien lacinia erat egestas aliquet. Etiam eu sapien et neque auctor aliquam a quis neque.</string>
+
+
     <string-array name="setting_reader_theme_options">
         <item>Follow application theme</item>
         <item>Dark</item>

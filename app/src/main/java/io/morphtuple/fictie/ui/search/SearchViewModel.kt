@@ -1,8 +1,7 @@
-package io.morphtuple.fictie.fragments
+package io.morphtuple.fictie.ui.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -13,7 +12,6 @@ import io.morphtuple.fictie.services.AO3SearchPagingSource
 import io.morphtuple.fictie.services.AO3Service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject

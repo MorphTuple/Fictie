@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/test_paragraph"
+        android:layout_marginHorizontal="@dimen/d_padding_margin_xx"
+        android:layout_marginVertical="@dimen/d_padding_margin"
+        android:justificationMode="inter_word"
+        android:lineSpacingMultiplier="1.15" />
+
+</RelativeLayout>

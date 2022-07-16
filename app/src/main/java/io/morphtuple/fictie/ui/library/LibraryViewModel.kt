@@ -1,4 +1,4 @@
-package io.morphtuple.fictie.fragments
+package io.morphtuple.fictie.ui.library
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

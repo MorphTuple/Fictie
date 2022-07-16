@@ -1,16 +1,17 @@
-package io.morphtuple.fictie.adapters
+package io.morphtuple.fictie.ui.library
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListAdapter
+import io.morphtuple.fictie.ui.shared.PartialFicViewHolder
 import io.morphtuple.fictie.databinding.LayoutRowSearchFicBinding
 import io.morphtuple.fictie.models.*
 
-class PagingPartialFicResultAdapter constructor(
+class ListPartialFicResultAdapter constructor(
     private val onClick: ((Marked<PartialFic>) -> Unit),
     private val onBookmarkClicked: ((Marked<PartialFic>) -> Unit)
 ) :
-    PagingDataAdapter<Marked<PartialFic>, PartialFicViewHolder>(
+    ListAdapter<Marked<PartialFic>, PartialFicViewHolder>(
         MarkedDiffCallback()
     ) {
 

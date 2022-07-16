@@ -1,10 +1,11 @@
-package io.morphtuple.fictie.fragments
+package io.morphtuple.fictie.ui.settings
 
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import io.morphtuple.fictie.R
+import io.morphtuple.fictie.data.preferences.PreferencesHelper
+import io.morphtuple.fictie.data.preferences.ReaderThemeType
 
 class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -13,11 +14,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val readerTheme = findPreference<ListPreference>("pref_reader_theme")
         val prefTheme = findPreference<ListPreference>("pref_theme")
 
-        // TODO Move to a helper class
-        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val ph = PreferencesHelper(requireContext())
 
         readerTheme?.setOnPreferenceChangeListener { _, newValue ->
-            sp.edit().putString("reader_theme", newValue as String).commit()
+            ph.setReaderTheme(ReaderThemeType.valueOf((newValue as String).uppercase()))
+            true
         }
 
 //        prefTheme?.setOnPreferenceChangeListener { _, newValue ->
