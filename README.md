@@ -21,14 +21,14 @@ agreeing to [Archive of Our Own's Terms of Service](https://archiveofourown.org/
 - [ ] Offline Reading
 - [ ] Offline Image Asset Store
 - [ ] Remember last scroll position
-- [ ] Themes (Dark mode/light mode, or even different color)
+- [x] Reader Themes (Dark mode/light mode, or even different color)
 - [ ] Configurable font size
 - [ ] Configurable font option
 - [ ] Share button
 - [ ] Notification Subscription on new by search query
 - [ ] Notification Subscription on new chapter
 - [ ] Notification Subscription on new by user
-- [ ] Open With "Fictie"
+- [x] Open With "Fictie"
 - [ ] Browse by tag
 - [ ] Browse by user
 - [ ] Tagged Library
