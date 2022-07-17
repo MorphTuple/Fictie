@@ -12,7 +12,9 @@
         android:textIsSelectable="true"
         android:text="@string/setting_theme"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="?android:textColorPrimary"
+        android:fontFamily="@font/merriweather_regular"
+        android:textSize="22sp"
         android:textStyle="bold|italic" />
 
 </RelativeLayout>
