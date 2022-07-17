@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:layout_marginHorizontal="@dimen/d_padding_margin_xx"
         android:id="@+id/paragraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/d_padding_margin_xh"
+        android:textIsSelectable="true"
         android:text="@string/setting_theme"
         android:textAlignment="center"
         android:textSize="18sp"

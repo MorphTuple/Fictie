@@ -27,7 +27,7 @@ class ReaderViewModel @Inject constructor(private val ao3Service: AO3Service) : 
         MutableLiveData(false)
     }
 
-    private val navigation = MutableStateFlow<FicNavigation?>(null)
+    val navigation = MutableStateFlow<FicNavigation?>(null)
 
     val flow = navigation.filterNotNull()
         .flatMapLatest {
@@ -36,7 +36,7 @@ class ReaderViewModel @Inject constructor(private val ao3Service: AO3Service) : 
             }.flow.cachedIn(viewModelScope)
         }
 
-    fun getFic(ficId: String) {
+    fun loadNavigation(ficId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 navigation.value = ao3Service.getNavigation(ficId)

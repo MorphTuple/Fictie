@@ -7,6 +7,7 @@
         android:id="@+id/paragraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textIsSelectable="true"
         android:layout_marginHorizontal="@dimen/d_padding_margin_xx"
         android:layout_marginVertical="@dimen/d_padding_margin"
         android:lineSpacingMultiplier="1.15" />

@@ -4,10 +4,15 @@ import org.jsoup.nodes.Document
 
 data class FicNavigation(
     val ficId: String,
-    val chapters: List<FicIndex>
+    val title: String,
+    val author: String,
+    val chapters: List<FicIndex>,
 ) {
     companion object {
         fun parseFromDocument(ficId: String, dom: Document): FicNavigation {
+            val title = dom.select(".works-navigate > .heading > a").first()?.text().orEmpty()
+            val author = dom.select(".works-navigate > .heading > a[rel=\"author\"]").first()?.text().orEmpty()
+
             val chapters = dom.select(".chapter.index.group > li").mapIndexed { idx, it ->
                 val a = it.select("a").first()
                 val href = a?.attr("href").orEmpty()
@@ -21,7 +26,7 @@ data class FicNavigation(
                 FicIndex(idx + 1, title, ficId, chapterId, date)
             }
 
-            return FicNavigation(ficId = ficId, chapters)
+            return FicNavigation(ficId = ficId, title, author, chapters)
         }
     }
 }

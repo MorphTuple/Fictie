@@ -25,4 +25,20 @@
         <item name="android:layout_marginEnd">@dimen/d_padding_margin</item>
         <item name="android:layout_marginTop">@dimen/d_padding_margin</item>
     </style>
+
+    <style name="ReaderToolbar">
+        <item name="iconTint">#fff</item>
+<!--        <item name="colorOnPrimary">@color/ca_green</item>-->
+<!--        <item name="android:textColorPrimary">@color/ca_green</item>-->
+    </style>
+
+    <style name="ReaderToolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ReaderToolbar.SubtitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
 </resources>
