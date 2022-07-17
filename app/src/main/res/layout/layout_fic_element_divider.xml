@@ -11,10 +11,6 @@
         android:layout_marginHorizontal="@dimen/d_padding_margin_xx"
         android:layout_marginVertical="@dimen/d_padding_margin_xh"
         android:src="@drawable/line_drawable"
-        android:text="@string/setting_theme"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
         app:tint="?android:colorForeground" />
 
 </RelativeLayout>

@@ -27,15 +27,14 @@ class AO3Service @Inject constructor(
         return bookmarkedFicDao.loadAllPartialFic()
     }
 
-    fun toggleBookmark(partialFic: PartialFic): Boolean {
-        return try {
+    fun toggleBookmark(partialFic: PartialFic): Boolean =
+        try {
             bookmarkedFicDao.insertAll(partialFic)
             true
         } catch (e: SQLiteConstraintException) {
             bookmarkedFicDao.delete(partialFic)
             false
         }
-    }
 
     private fun toQueryString(searchQuery: String): String {
         return "?work_search[query]=${URLEncoder.encode(searchQuery, "utf-8")}"

@@ -34,7 +34,7 @@ data class FicElement(
                     val imgCheck = it.select("img").first()
 
                     if (imgCheck != null) {
-                        list.add(FicElement("", FicElementType.IMAGE, imgCheck.attr("href")))
+                        list.add(FicElement("", FicElementType.IMAGE, imgCheck.attr("src")))
                     } else {
                         list.add(FicElement(it.text(), FicElementType.PARAGRAPH))
                     }

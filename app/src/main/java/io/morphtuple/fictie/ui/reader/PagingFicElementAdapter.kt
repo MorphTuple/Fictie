@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import io.morphtuple.fictie.common.HashDiffCallback
 import io.morphtuple.fictie.databinding.LayoutFicElementChapterBinding
 import io.morphtuple.fictie.databinding.LayoutFicElementDividerBinding
+import io.morphtuple.fictie.databinding.LayoutFicElementImageBinding
 import io.morphtuple.fictie.databinding.LayoutFicElementTextBinding
 import io.morphtuple.fictie.models.FicElement
 import io.morphtuple.fictie.models.FicElementType
@@ -18,6 +19,7 @@ class PagingFicElementAdapter :
             FicElementType.CHAPTER -> 0
             FicElementType.PARAGRAPH -> 1
             FicElementType.DIVIDER -> 2
+            FicElementType.IMAGE -> 3
             else -> 0
         }
     }
@@ -36,6 +38,7 @@ class PagingFicElementAdapter :
         return when (viewType) {
             0 -> FicChapterViewHolder(LayoutFicElementChapterBinding.inflate(inflater))
             1 -> FicParagraphViewHolder(LayoutFicElementTextBinding.inflate(inflater))
+            3 -> FicImageViewHolder(parent.context, LayoutFicElementImageBinding.inflate(inflater))
             else -> FicDividerViewHolder(LayoutFicElementDividerBinding.inflate(inflater))
         }
     }
